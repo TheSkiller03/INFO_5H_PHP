@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>  
+<html>
+<head>
+<style>
+.error {color: #FF0000;}
+</style>
+</head>
+<body>  
+
+<?php
+$nameErr = $emailErr = $SnameErr = $NascitaErr = $NtelErr = $PwordErr = $NickErr = $cittàErr = $CAPerr = $viaErr ="";
+$name = $email = $Sname = $Nascita = $Ntel = $Pword = $Nick = $città = $CAP = $via ="";
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") 
+{
+    if (empty($_POST["name"]))
+    {
+      $nameErr = "Nome richiesto";
+    }
+    else 
+    {
+        $name = test_input($_POST["name"]);
+        // controlla se sono state inserite solo lettere e spazi bianchi
+    }
+    if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) 
+    {
+      $nameErr = "sono consentite solo lettere e spazi bianchi";
+    }
+
+    /**********************************************************************/
+
+    if(empty($_POST["surname"]))
+    {
+      $surname = "Cognome richiesto";
+    }
+    else
+    {
+       $Sname = test_input($_POST["surname"]);
+       // controlla se sono state inserite solo lettere e spazi bianchi
+    }
+    if(!preg_match("/^[a-zA-Z-' ]*$/", $Sname))
+    {
+      $SnameErr = "sono consentite solo lettere e spazi bianchi";
+    }
+
+    /*************************************************************************/
+  
+    if (empty($_POST["email"])) 
+    {
+        $emailErr = "Email richiesta";
+    } 
+    else 
+    {
+        $email = test_input($_POST["email"]);
+        // controlla se l'indirizzo email è scritto bene
+    }
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+    {
+      $emailErr = "Email non valida";
+    }
+
+    /*******************************************************************/
+
+    if (empty($_POST["nascita"]))
+    {
+      $NascitaErr = "Data richiesta";
+    }
+    else
+    {
+        $Nascita = test_input($_POST["nascita"]);
+    }
+
+
+    /**************************************************************************/
+
+    if(empty($_POST["tel"]))
+    {
+      $NtelErr= "numero di telefono richiesto";
+    }
+    else
+    {
+      if(strlen($_POST["tel"]) != 10)
+      {
+        $NtelErr= "numero di telefono non valido";
+      }
+      else
+      {
+        $Ntel = test_input($_POST["tel"]);
+      }
+    }
+
+
+    /********************************************************************************/
+
+    if(empty($_POST["Pword"]))
+    {
+      $PwordErr = "Password richiesta";
+    }
+    else
+    {
+      if(strlen($_POST["Pword"])>8) 
+      //controlla che la lunghezza della password sia almeno di 8 caratteri
+      {
+        $Pword= test_input($_POST["Pword"]);
+      }
+      else
+      {
+        $PwordErr = "Password troppo corta";
+      }
+    }
+
+    /*************************************************************************************/
+
+    if (empty($_POST["nick"])) 
+    {
+      $NickErr = "Nickname richiesto";
+    }
+    else 
+    {
+        $Nick = test_input($_POST["nick"]);
+        // controlla se sono stati inseriti dei valori
+    }
+    if (!preg_match("/^[a-zA-Z0-9'._-]*$/",$Nick)) 
+    {
+      $NickErr = "valori non consentiti";
+    }
+
+    /************************************************************************************/
+
+    if(empty($_POST["città"]))
+    {
+       $cittàErr = "città richiesta";
+    }
+    else
+    {
+        $città= test_input($_POST["città"]);
+    }
+
+    /*************************************************************************************/
+
+    if(empty($_POST["CAP"]))
+    {
+       $CAPerr = "CAP richiesto";
+    }
+    else
+    {
+        $CAP= test_input($_POST["CAP"]);
+    }
+
+    /**************************************************************************************/
+
+    if(empty($_POST["via"]))
+    {
+       $viaErr = "Via richiesta";
+    }
+    else
+    {
+        $via= test_input($_POST["via"]);
+    }
+
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
+
+<h2>PHP Form Validation Example</h2>
+<p><span class="error">* required field</span></p>
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+  
+  <label for=name></label>
+  <input id=name type="text" name="name" value="<?php echo $name;?>" placeholder=Nome>
+  <span class="error">* <?php echo $nameErr;?></span>
+
+  <br><br>
+
+  <label for=surname></label>
+  <input id=surname type="text" name="surname" value="<?php echo $Sname;?>" placeholder=Cognome>
+  <span class="error">* <?php echo $SnameErr;?></span>
+
+  <br><br>
+
+  <label for=nick></label>
+  <input id=nick type="text" name="nick" value="<?php echo $Nick;?>" placeholder="Nickname">
+  <span class="error">* <?php echo $NickErr;?></span>
+
+  <br><br>
+
+  <label for=email></label>  
+  <input id=email type="text" name="email" value="<?php echo $email;?>" placeholder=Email>
+  <span class="error">* <?php echo $emailErr;?></span>
+
+  <br><br>
+
+  <label for=Pword></label>
+  <input id=Pword type="password" name="Pword" value="<?php echo $Pword;?>" placeholder= Password>
+  <span class="error">* <?php echo $PwordErr;?></span>
+
+  <br><br>
+
+
+  <label for=data></label>
+  <input id=data type="date" name="nascita" value="<?php echo $Nascita;?>">
+  <span class="error">* <?php echo $NascitaErr;?></span>
+
+  <br><br>
+
+  <label for=tel></label>
+  <input id=tel type="tel" name="tel"  value="<?php echo $Ntel;?>" placeholder= "es. +39 0000000000">
+  <span class="error">* <?php echo $NtelErr;?></span>
+
+  <br><br>
+
+  <label for=citta></label>
+  <input id=citta name=città type=text  value="<?php echo $città;?>" placeholder="Città" autofocus>
+  <span class="error">* <?php echo $cittàErr;?></span>
+
+  <br><br>
+
+  <label for=via></label>
+  <input id=via name="via" type="text"  value="<?php echo $via;?>" placeholder="Via/piazza">  
+  <span class="error">* <?php echo $viaErr;?></span> 
+
+  <br><br>
+
+  <label for=CAP></label>
+  <input id=CAP name=CAP type=text  value="<?php echo $CAP;?>" placeholder="CAP" autofocus>
+  <span class="error">* <?php echo $CAPerr;?></span>
+
+  <br><br>
+  <input type="submit" name="submit" value="Submit">  
+</form>
+
+<?php
+  echo "<h2>i tuoi dati:</h2>";
+  echo $name;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $Sname;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $email;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $Pword;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $Nascita;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $Ntel;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $via;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $città;
+  echo "&nbsp;&nbsp;";
+  echo "|";
+  echo "&nbsp;&nbsp;";
+  echo $CAP;
+  echo "<br>";
+?>
+
+
+</body>
+</html>
