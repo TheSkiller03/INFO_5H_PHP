@@ -1,0 +1,30 @@
+body
+{
+    background-color:hotpink;
+    text-align: center;
+    margin-top: 20%;
+}
+
+input[type=text]
+{
+    border-radius: 15px;
+    background-color:darkgreen;
+    color:aliceblue;
+}
+
+input[type=password]
+{
+    border-radius: 15px;
+    background-color:darkgreen;
+    color:aliceblue;
+}
+
+a
+{
+    color:darkolivegreen;
+}
+
+input[type=submit]
+{
+    border-radius: 15px;
+}
